@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/pollen/projects/space",
+  "command": "/sbin/cc  -I/home/pollen/projects/space/external/glad/include  -o CMakeFiles/glad.dir/external/glad/src/glad.c.o -c /home/pollen/projects/space/external/glad/src/glad.c",
+  "file": "/home/pollen/projects/space/external/glad/src/glad.c",
+  "output": "CMakeFiles/glad.dir/external/glad/src/glad.c.o"
+},
+{
+  "directory": "/home/pollen/projects/space",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external/glad/include -std=gnu++17 -o CMakeFiles/Space.dir/src/main.cpp.o -c /home/pollen/projects/space/src/main.cpp",
+  "file": "/home/pollen/projects/space/src/main.cpp",
+  "output": "CMakeFiles/Space.dir/src/main.cpp.o"
+}
+]
