@@ -1,20 +1,14 @@
 #pragma once
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
+#define GL_ERR()                                                               \
+	do {                                                                       \
+		GLenum err;                                                            \
+		while ((err = glGetError()) != GL_NO_ERROR) {                          \
+			std::cerr << "OpenGL error: " << err << " at " << __FILE__ << ":"  \
+			          << __LINE__ << std::endl;                                \
+		}                                                                      \
+	} while (0)
 
-std::string read_file(const char *path) {
-  std::string content;
-  std::ifstream stream(path);
+#include <string>
 
-  if (!stream.good()) {
-    std::cerr << "Failed to open file " << path << std::endl;
-    return "";
-  } else {
-    std::ostringstream ss;
-    ss << stream.rdbuf();
-    stream.close();
-    return ss.str();
-  }
-}
+std::string read_file(std::string path);

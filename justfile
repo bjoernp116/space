@@ -1,15 +1,22 @@
-set working-directory := "./build"
 
 _default:
     just --choose
 
+[working-directory: './build']
 clean:
     rm ./* -rf
 
-build: 
+[working-directory: './src']
+fmt: 
+    clang-format -i ./*.h ./*.cpp
+
+[working-directory: './build']
+build: fmt 
     cmake ..
     cmake --build .
 
 run: build
-    ./Space
+    ./build/Space
 
+debug: build
+    gdb ./build/Space
