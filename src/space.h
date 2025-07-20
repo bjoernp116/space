@@ -16,7 +16,8 @@ class Space {
 	~Space();
 
 	int init();
-	void process_input();
+	static void process_input(
+	    GLFWwindow *window, int key, int scancode, int action, int mods);
 	void update();
 	void render();
 };

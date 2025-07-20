@@ -10,10 +10,10 @@ int main() {
 
 	Space space(800, 600);
 	space.init();
-	while (!glfwWindowShouldClose(space.window)) {
-		space.update();
-		space.render();
-	}
+	/*while (!glfwWindowShouldClose(space.window)) {
+	    space.update();
+	    space.render();
+	}*/
 
 	glfwTerminate();
 	return 0;

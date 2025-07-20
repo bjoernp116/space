@@ -162,7 +162,6 @@ void VertexArray::add_buffer(const VertexBuffer &vb,
 		std::cout << "normalized: " << (element.normalized ? GL_TRUE : GL_FALSE)
 		          << std::endl;
 		std::cout << "stride: " << layout.stride << std::endl;
-		std::cout << "expected stride: " << 3 * sizeof(float) << std::endl;
 		std::cout << "offset: " << offset << std::endl;
 		glVertexAttribPointer(i,
 		    element.count,

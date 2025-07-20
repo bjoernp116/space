@@ -1,9 +1,19 @@
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "renderer.h"
 #include "utils.h"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/trigonometric.hpp>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
 
-Renderer::Renderer() {}
+Renderer::Renderer(const float aspect_ratio) : view() {
+	view.position = glm::vec3(0.0f, 0.0f, 3.0f);
+	view.rotation = glm::vec3(0.0f);
+	view.scale = glm::vec3(1.0f);
+	projection =
+	    glm::perspective(glm::radians(45.f), aspect_ratio, 0.1f, 100.0f);
+}
 
 void Renderer::clear() const {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -12,13 +22,37 @@ void Renderer::clear() const {
 	GL_ERR();
 }
 
-void Renderer::draw(const VertexArray &VAO,
-    const IndexBuffer &EBO,
+void Renderer::draw(const Mesh &mesh,
     const ShaderProgram &shader_program) const {
+	mesh.bind();
 
-	VAO.bind();
-	EBO.bind();
+	shader_program.use();
+	float time = glfwGetTime();
+	glm::mat4 model =
+	    glm::rotate(glm::mat4(1.0f), time, glm::vec3(0.0f, 1.0f, 1.0f));
+	shader_program.set_matrix4("u_Model", model);
+	shader_program.set_matrix4("u_View", view.matrix());
+	shader_program.set_matrix4("u_Projection", projection);
 
-	glDrawElements(GL_TRIANGLES, EBO.count, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, 0);
 	GL_ERR();
+	mesh.unbind();
+}
+
+void Renderer::draw(const Entity &entity,
+    const ShaderProgram &shader_program) const {
+	entity.mesh->bind();
+
+	shader_program.use();
+	glm::mat4 model = entity.transform.matrix();
+	shader_program.set_matrix4("u_Model", model);
+	shader_program.set_matrix4("u_View", view.inverse_matrix());
+	shader_program.set_matrix4("u_Projection", projection);
+
+	glDrawElements(GL_TRIANGLES,
+	    entity.mesh->get_index_count(),
+	    GL_UNSIGNED_INT,
+	    0);
+	GL_ERR();
+	entity.mesh->unbind();
 }
