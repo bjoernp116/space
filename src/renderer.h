@@ -6,14 +6,17 @@
 
 class Renderer {
   public:
-	std::vector<Entity> entities;
-
 	Transform view;
 
 	glm::mat4 projection;
 
 	Renderer(const float aspect_ratio);
-	void clear() const;
+	static void clear();
 	void draw(const Mesh &mesh, const ShaderProgram &shader_program) const;
 	void draw(const Entity &entity, const ShaderProgram &shader_program) const;
+	void draw(const ShaderProgram &shader_program) const;
+	void push(const Entity &entity);
+
+  private:
+	std::vector<Entity> entities;
 };

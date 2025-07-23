@@ -7,10 +7,11 @@ class VertexBuffer {
 	unsigned int id;
 
 	VertexBuffer(const void *data, unsigned int size);
+	VertexBuffer();
+
 	~VertexBuffer();
 
-	void bind() const;
-	void unbind() const;
+	void add_data(const std::vector<float> &data) const;
 
 	// Delete copy constructor and copy assignment
 	VertexBuffer(const VertexBuffer &) = delete;
@@ -28,9 +29,9 @@ class IndexBuffer {
 
 	IndexBuffer(const unsigned int *data, unsigned int count);
 	~IndexBuffer();
+	IndexBuffer();
 
-	void bind() const;
-	void unbind() const;
+	void add_data(const std::vector<unsigned int> &data) const;
 
 	// Delete copy constructor and copy assignment
 	IndexBuffer(const IndexBuffer &) = delete;
@@ -69,6 +70,7 @@ class VertexArray {
 	~VertexArray();
 
 	void add_buffer(const VertexBuffer &vb, const VertexBufferLayout &layout);
+	void add_buffer(const IndexBuffer &ib);
 	void bind() const;
 	void unbind() const;
 };

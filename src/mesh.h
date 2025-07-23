@@ -9,10 +9,10 @@ class Mesh {
 	    unsigned int v_size,
 	    const unsigned int *i_data,
 	    unsigned int i_count);
-	void bind() const;
-	void unbind() const;
+	Mesh(const char *path);
 	void draw(const ShaderProgram &shader_program) const;
 	unsigned int get_index_count() const;
+	void bind_vao() const;
 
   private:
 	VertexBuffer vb;

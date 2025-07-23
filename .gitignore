@@ -2,3 +2,5 @@ build/
 external/
 .cache
 .gdb_history
+.renderdoc
+dump.csv

@@ -10,21 +10,18 @@ Shader::Shader(std::string path, GLenum shader_type) {
 	src = read_file(SHADER_PATH + path);
 	type = shader_type;
 	id = glCreateShader(shader_type);
-	GL_ERR();
 }
 
 Shader::~Shader() {
 	glDeleteShader(id);
-	GL_ERR();
 }
 
 void Shader::compile_shader() const {
 	std::cout << src;
 	const char *src_point = src.c_str();
 	glShaderSource(id, 1, &src_point, nullptr);
-	GL_ERR();
+
 	glCompileShader(id);
-	GL_ERR();
 }
 
 bool Shader::status() const {
@@ -56,7 +53,6 @@ void ShaderProgram::set_matrix4(const char *name,
 		std::cerr << "Uniform " << name << " does not exist!" << std::endl;
 	}
 	glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
-	GL_ERR();
 }
 
 void ShaderProgram::set_vector3f(
@@ -66,7 +62,6 @@ void ShaderProgram::set_vector3f(
 		std::cerr << "Uniform " << name << " does not exist!" << std::endl;
 	}
 	glUniform3f(location, x, y, z);
-	GL_ERR();
 }
 
 ShaderProgram::ShaderProgram(std::string vertex_path,
@@ -80,11 +75,10 @@ ShaderProgram::ShaderProgram(std::string vertex_path,
 
 	id = glCreateProgram();
 	glAttachShader(id, vertex.id);
-	GL_ERR();
+
 	glAttachShader(id, fragment.id);
-	GL_ERR();
+
 	glLinkProgram(id);
-	GL_ERR();
 
 	int success;
 	glGetProgramiv(id, GL_LINK_STATUS, &success);
@@ -95,17 +89,14 @@ ShaderProgram::ShaderProgram(std::string vertex_path,
 	}
 
 	glDetachShader(id, vertex.id);
-	GL_ERR();
+
 	glDetachShader(id, fragment.id);
-	GL_ERR();
 }
 
 ShaderProgram::~ShaderProgram() {
 	glDeleteProgram(id);
-	GL_ERR();
 }
 
 void ShaderProgram::use() const {
 	glUseProgram(id);
-	GL_ERR();
 }

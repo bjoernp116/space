@@ -15,17 +15,15 @@ Renderer::Renderer(const float aspect_ratio) : view() {
 	    glm::perspective(glm::radians(45.f), aspect_ratio, 0.1f, 100.0f);
 }
 
-void Renderer::clear() const {
+void Renderer::clear() {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	GL_ERR();
+
 	glClear(GL_COLOR_BUFFER_BIT);
-	GL_ERR();
 }
 
 void Renderer::draw(const Mesh &mesh,
     const ShaderProgram &shader_program) const {
-	mesh.bind();
-
+	mesh.bind_vao();
 	shader_program.use();
 	float time = glfwGetTime();
 	glm::mat4 model =
@@ -35,14 +33,12 @@ void Renderer::draw(const Mesh &mesh,
 	shader_program.set_matrix4("u_Projection", projection);
 
 	glDrawElements(GL_TRIANGLES, mesh.get_index_count(), GL_UNSIGNED_INT, 0);
-	GL_ERR();
-	mesh.unbind();
 }
 
 void Renderer::draw(const Entity &entity,
     const ShaderProgram &shader_program) const {
-	entity.mesh->bind();
 
+	entity.mesh->bind_vao();
 	shader_program.use();
 	glm::mat4 model = entity.transform.matrix();
 	shader_program.set_matrix4("u_Model", model);
@@ -53,6 +49,14 @@ void Renderer::draw(const Entity &entity,
 	    entity.mesh->get_index_count(),
 	    GL_UNSIGNED_INT,
 	    0);
-	GL_ERR();
-	entity.mesh->unbind();
+}
+
+void Renderer::draw(const ShaderProgram &shader_program) const {
+	for (Entity entity : entities) {
+		draw(entity, shader_program);
+	}
+}
+
+void Renderer::push(const Entity &entity) {
+	entities.push_back(entity);
 }

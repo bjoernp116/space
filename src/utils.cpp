@@ -18,3 +18,35 @@ std::string read_file(std::string path) {
 		return ss.str();
 	}
 }
+
+std::vector<std::string> read_lines(std::string input) {
+	std::vector<std::string> lines;
+	std::istringstream stream(input);
+	std::string line;
+	while (std::getline(stream, line)) {
+		lines.push_back(line);
+	}
+	return lines;
+}
+
+std::vector<std::string> split(std::string input, char delimiter) {
+	std::vector<std::string> result;
+	std::string current;
+
+	for (char ch : input) {
+		if (ch == delimiter) {
+			if (!current.empty()) {
+				result.push_back(current);
+				current.clear();
+			}
+		} else {
+			current += ch;
+		}
+	}
+
+	if (!current.empty()) {
+		result.push_back(current);
+	}
+
+	return result;
+}
