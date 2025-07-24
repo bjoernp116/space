@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include "buffer.h"
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include <vector>
 
 #define INT2VOIDP(i) (const void *)(uintptr_t)(i)
@@ -117,7 +118,7 @@ unsigned int VertexBufferElement::size() const {
 VertexArray::VertexArray() {
 	glCreateVertexArrays(1, &id);
 	glBindVertexArray(id);
-	std::cout << "VAO CREATED!" << std::endl;
+	spdlog::debug("VAO: VAO CREATED: {}", id);
 }
 
 VertexArray::~VertexArray() {
@@ -127,29 +128,31 @@ VertexArray::~VertexArray() {
 void VertexArray::add_buffer(const VertexBuffer &vb,
     const VertexBufferLayout &layout) {
 
-	std::cout << "ADD BUFFER" << std::endl;
+	spdlog::debug("VAO: ADD BUFFER!");
+
+	glVertexArrayVertexBuffer(id, 0, vb.id, 0, layout.stride);
 
 	const auto &elements = layout.get_elements();
 	unsigned int offset = 0;
 	for (unsigned int i = 0; i < elements.size(); i++) {
 		const auto &element = elements[i];
-		glEnableVertexArrayAttrib(i, 0);
+		spdlog::debug("VAO: FORMAT LAYOUT {}", 0);
 
-		glVertexArrayAttribFormat(i,
+		glEnableVertexArrayAttrib(id, 0);
+
+		glVertexArrayAttribFormat(id,
 		    0,
 		    element.count,
 		    element.type,
 		    element.normalized,
 		    0);
-
-		glVertexArrayVertexBuffer(i, 0, vb.id, 0, layout.stride);
 		/*std::cout << "count: " << element.count << std::endl;
 		std::cout << "type: " << element.type << std::endl;
 		std::cout << "normalized: " << (element.normalized ? GL_TRUE : GL_FALSE)
 		          << std::endl;
 		std::cout << "stride: " << layout.stride << std::endl;
 		std::cout << "offset: " << offset << std::endl;*/
-		glVertexArrayAttribBinding(i, 0, 0);
+		glVertexArrayAttribBinding(id, 0, 0);
 
 		offset += element.count * element.size();
 	}

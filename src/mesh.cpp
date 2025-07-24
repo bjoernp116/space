@@ -1,5 +1,6 @@
 #include <cctype>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include "buffer.h"
 #include "utils.h"
 #include "mesh.h"
@@ -24,15 +25,14 @@ Mesh::Mesh(const char *path) {
 	int line = 0;
 	for (std::string str : read_lines(file)) {
 		line += 1;
-		// std::cout << "Line " << line << ": " << str << std::endl;
 		if (str.size() < 7 || str[0] == '#') {
-			std::cout << str << std::endl;
 			continue;
 		}
 		std::vector<std::string> column = split(str, ' ');
 		if (!std::isalpha(column[0][0])) {
-			std::cout << "Line " << line << ": missing command got "
-			          << column[0] << std::endl;
+			spdlog::error("Parser error: line {0}: missing command, got {1}",
+			    line,
+			    column[0]);
 			continue;
 		}
 		if (column[0][0] == 'v') {
@@ -55,8 +55,6 @@ Mesh::Mesh(const char *path) {
 	VertexBufferLayout layout;
 	layout.push<float>(3);
 	vao.add_buffer(vb, layout);
-	std::cout << path << " VAO: " << vao.id << ", VBO: " << vb.id
-	          << " IBO: " << ib.id << std::endl;
 }
 
 unsigned int Mesh::get_index_count() const {

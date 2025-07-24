@@ -1,11 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "renderer.h"
-#include "utils.h"
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/trigonometric.hpp>
-#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
+#include <spdlog/spdlog.h>
 
 Renderer::Renderer(const float aspect_ratio) : view() {
 	view.position = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -44,6 +43,9 @@ void Renderer::draw(const Entity &entity,
 	shader_program.set_matrix4("u_Model", model);
 	shader_program.set_matrix4("u_View", view.inverse_matrix());
 	shader_program.set_matrix4("u_Projection", projection);
+	int vao = 0;
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao);
+	spdlog::debug("VAO: Binding: {}", vao);
 
 	glDrawElements(GL_TRIANGLES,
 	    entity.mesh->get_index_count(),

@@ -1,8 +1,8 @@
+#include <spdlog/spdlog.h>
 #include "shader.h"
 #include "utils.h"
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
-#include <utility>
 
 const std::string SHADER_PATH = "./shaders/";
 
@@ -17,7 +17,6 @@ Shader::~Shader() {
 }
 
 void Shader::compile_shader() const {
-	std::cout << src;
 	const char *src_point = src.c_str();
 	glShaderSource(id, 1, &src_point, nullptr);
 
@@ -26,13 +25,13 @@ void Shader::compile_shader() const {
 
 bool Shader::status() const {
 	int success;
-	char infoLog[512];
+	char info_log[512];
 	glGetShaderiv(id, GL_COMPILE_STATUS, &success);
 	if (!success) {
-		glGetShaderInfoLog(id, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-		          << infoLog << std::endl;
-		std::cout << "(" << src << ")" << std::endl;
+		glGetShaderInfoLog(id, 512, NULL, info_log);
+		spdlog::error("Shader compilation error: {0}",
+		    reinterpret_cast<const char *>(info_log));
+		spdlog::debug("({0})", src);
 
 		return false;
 	}

@@ -21,10 +21,12 @@ find_package(glfw3 REQUIRED)
 #target_link_libraries(Space glad)
 
 add_subdirectory(external/glm)
+add_subdirectory(external/spdlog)
 
 add_library(glad STATIC external/glad/src/glad.c)
 target_include_directories(glad PUBLIC external/glad/include)
 target_link_libraries(Space glad glm)
+target_link_libraries(Space glad spdlog)
 target_include_directories(Space PRIVATE external/glad/include)
 
 # Link GLFW

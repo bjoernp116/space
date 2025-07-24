@@ -1,8 +1,10 @@
 #include "space.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <spdlog/spdlog.h>
 
 int main() {
+	spdlog::set_level(spdlog::level::debug);
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
