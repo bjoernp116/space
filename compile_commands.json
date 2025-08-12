@@ -1,14 +1,134 @@
 [
 {
-  "directory": "/home/pollen/projects/space",
-  "command": "/sbin/cc  -I/home/pollen/projects/space/external/glad/include  -o CMakeFiles/glad.dir/external/glad/src/glad.c.o -c /home/pollen/projects/space/external/glad/src/glad.c",
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/cc  -I/home/pollen/projects/space/external/glad/include -g -o CMakeFiles/glad.dir/external/glad/src/glad.c.o -c /home/pollen/projects/space/external/glad/src/glad.c",
   "file": "/home/pollen/projects/space/external/glad/src/glad.c",
   "output": "CMakeFiles/glad.dir/external/glad/src/glad.c.o"
 },
 {
-  "directory": "/home/pollen/projects/space",
-  "command": "/sbin/c++  -I/home/pollen/projects/space/external/glad/include -std=gnu++17 -o CMakeFiles/Space.dir/src/main.cpp.o -c /home/pollen/projects/space/src/main.cpp",
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/buffer.cpp.o -c /home/pollen/projects/space/src/buffer.cpp",
+  "file": "/home/pollen/projects/space/src/buffer.cpp",
+  "output": "CMakeFiles/Space.dir/src/buffer.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/entity.cpp.o -c /home/pollen/projects/space/src/entity.cpp",
+  "file": "/home/pollen/projects/space/src/entity.cpp",
+  "output": "CMakeFiles/Space.dir/src/entity.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/input.cpp.o -c /home/pollen/projects/space/src/input.cpp",
+  "file": "/home/pollen/projects/space/src/input.cpp",
+  "output": "CMakeFiles/Space.dir/src/input.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/light.cpp.o -c /home/pollen/projects/space/src/light.cpp",
+  "file": "/home/pollen/projects/space/src/light.cpp",
+  "output": "CMakeFiles/Space.dir/src/light.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/main.cpp.o -c /home/pollen/projects/space/src/main.cpp",
   "file": "/home/pollen/projects/space/src/main.cpp",
   "output": "CMakeFiles/Space.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/material.cpp.o -c /home/pollen/projects/space/src/material.cpp",
+  "file": "/home/pollen/projects/space/src/material.cpp",
+  "output": "CMakeFiles/Space.dir/src/material.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/mesh.cpp.o -c /home/pollen/projects/space/src/mesh.cpp",
+  "file": "/home/pollen/projects/space/src/mesh.cpp",
+  "output": "CMakeFiles/Space.dir/src/mesh.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/renderer.cpp.o -c /home/pollen/projects/space/src/renderer.cpp",
+  "file": "/home/pollen/projects/space/src/renderer.cpp",
+  "output": "CMakeFiles/Space.dir/src/renderer.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/resource_manager.cpp.o -c /home/pollen/projects/space/src/resource_manager.cpp",
+  "file": "/home/pollen/projects/space/src/resource_manager.cpp",
+  "output": "CMakeFiles/Space.dir/src/resource_manager.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/shader.cpp.o -c /home/pollen/projects/space/src/shader.cpp",
+  "file": "/home/pollen/projects/space/src/shader.cpp",
+  "output": "CMakeFiles/Space.dir/src/shader.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/space.cpp.o -c /home/pollen/projects/space/src/space.cpp",
+  "file": "/home/pollen/projects/space/src/space.cpp",
+  "output": "CMakeFiles/Space.dir/src/space.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/transform.cpp.o -c /home/pollen/projects/space/src/transform.cpp",
+  "file": "/home/pollen/projects/space/src/transform.cpp",
+  "output": "CMakeFiles/Space.dir/src/transform.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/utils.cpp.o -c /home/pollen/projects/space/src/utils.cpp",
+  "file": "/home/pollen/projects/space/src/utils.cpp",
+  "output": "CMakeFiles/Space.dir/src/utils.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/glm/glm",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external/glm -g -std=c++11 -o CMakeFiles/glm.dir/detail/glm.cpp.o -c /home/pollen/projects/space/external/glm/glm/detail/glm.cpp",
+  "file": "/home/pollen/projects/space/external/glm/glm/detail/glm.cpp",
+  "output": "external/glm/glm/CMakeFiles/glm.dir/detail/glm.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/spdlog.cpp.o -c /home/pollen/projects/space/external/spdlog/src/spdlog.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/spdlog.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o -c /home/pollen/projects/space/external/spdlog/src/stdout_sinks.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/stdout_sinks.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/color_sinks.cpp.o -c /home/pollen/projects/space/external/spdlog/src/color_sinks.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/color_sinks.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/file_sinks.cpp.o -c /home/pollen/projects/space/external/spdlog/src/file_sinks.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/file_sinks.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/async.cpp.o -c /home/pollen/projects/space/external/spdlog/src/async.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/async.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/cfg.cpp.o -c /home/pollen/projects/space/external/spdlog/src/cfg.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/cfg.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build/external/spdlog",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -DSPDLOG_FWRITE_UNLOCKED -I/home/pollen/projects/space/external/spdlog/include -g -std=c++11 -o CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o -c /home/pollen/projects/space/external/spdlog/src/bundled_fmtlib_format.cpp",
+  "file": "/home/pollen/projects/space/external/spdlog/src/bundled_fmtlib_format.cpp",
+  "output": "external/spdlog/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o"
 }
 ]

@@ -39,13 +39,21 @@ void Renderer::draw(const Entity &entity,
 
 	entity.mesh->bind_vao();
 	shader_program.use();
+
 	glm::mat4 model = entity.transform.matrix();
-	shader_program.set_matrix4("u_Model", model);
-	shader_program.set_matrix4("u_View", view.inverse_matrix());
-	shader_program.set_matrix4("u_Projection", projection);
+	shader_program.set_matrix4("model", model);
+	shader_program.set_matrix4("view", view.inverse_matrix());
+	shader_program.set_matrix4("projection", projection);
+
+	shader_program.set_vector3f("mat_diffuse", entity.material.diffuse);
+	shader_program.set_vector3f("mat_specular", entity.material.specular);
+	shader_program.set_float("mat_shininess", entity.material.shininess);
+	shader_program.set_vector3f("view_pos", view.position);
+	shader_program.set_integer("light_size", lights.size());
+	shader_program.set_lights(lights);
+
 	int vao = 0;
 	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao);
-	spdlog::debug("VAO: Binding: {}", vao);
 
 	glDrawElements(GL_TRIANGLES,
 	    entity.mesh->get_index_count(),
@@ -61,4 +69,9 @@ void Renderer::draw(const ShaderProgram &shader_program) const {
 
 void Renderer::push(const Entity &entity) {
 	entities.push_back(entity);
+}
+
+Light *Renderer::push(const Light &light) {
+	lights.push_back(light);
+	return &lights.back();
 }

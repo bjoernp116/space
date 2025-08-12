@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "light.h"
 
 class Shader {
   public:
@@ -16,7 +17,6 @@ class Shader {
 	void compile_shader() const;
 	bool status() const;
 };
-
 class ShaderProgram {
   public:
 	unsigned int id;
@@ -39,4 +39,6 @@ class ShaderProgram {
 	    const char *name, float x, float y, float z, float w) const;
 	void set_vector4f(const char *name, const glm::vec4 &value) const;
 	void set_matrix4(const char *name, const glm::mat4 &matrix) const;
+
+	void set_lights(const std::vector<Light> light) const;
 };

@@ -1,7 +1,6 @@
 #include <cassert>
 #include <glad/glad.h>
 #include "buffer.h"
-#include <iostream>
 #include <spdlog/spdlog.h>
 #include <vector>
 
@@ -10,22 +9,22 @@
 VertexBuffer::VertexBuffer() {
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
+	spdlog::debug("VB{0} CREATED!", id);
 }
 
 VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
 	glNamedBufferData(id, size, data, GL_STATIC_DRAW);
+	spdlog::debug("VB{0} CREATED AND FILLED!", id);
 }
 
 void VertexBuffer::add_data(const std::vector<float> &data) const {
-	glNamedBufferData(id,
-	    data.size() * sizeof(float),
-	    data.data(),
-	    GL_STATIC_DRAW);
+	glNamedBufferData(id, 120, (void *)data.data(), GL_STATIC_DRAW);
 }
 
 VertexBuffer::~VertexBuffer() {
+	spdlog::warn("VB{0} DELETED!", id);
 	glDeleteBuffers(1, &id);
 }
 
@@ -35,6 +34,7 @@ VertexBuffer::VertexBuffer(VertexBuffer &&other) noexcept {
 }
 
 VertexBuffer &VertexBuffer::operator=(VertexBuffer &&other) noexcept {
+	spdlog::warn("VB{0} DELETED!", id);
 	if (this != &other) {
 		glDeleteBuffers(1, &id); // clean old buffer
 		id = other.id;
@@ -138,21 +138,21 @@ void VertexArray::add_buffer(const VertexBuffer &vb,
 		const auto &element = elements[i];
 		spdlog::debug("VAO: FORMAT LAYOUT {}", 0);
 
-		glEnableVertexArrayAttrib(id, 0);
+		glEnableVertexArrayAttrib(id, i);
 
 		glVertexArrayAttribFormat(id,
-		    0,
+		    i,
 		    element.count,
 		    element.type,
 		    element.normalized,
-		    0);
+		    offset);
 		/*std::cout << "count: " << element.count << std::endl;
 		std::cout << "type: " << element.type << std::endl;
 		std::cout << "normalized: " << (element.normalized ? GL_TRUE : GL_FALSE)
 		          << std::endl;
 		std::cout << "stride: " << layout.stride << std::endl;
 		std::cout << "offset: " << offset << std::endl;*/
-		glVertexArrayAttribBinding(id, 0, 0);
+		glVertexArrayAttribBinding(id, i, 0);
 
 		offset += element.count * element.size();
 	}

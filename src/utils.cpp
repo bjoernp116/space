@@ -1,5 +1,6 @@
 #include "utils.h"
 
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -65,65 +66,66 @@ void GLAPIENTRY debug_callback(GLenum source,
 	spdlog::error("Opengl Error {0}: {1}", id, message);
 	switch (source) {
 	case GL_DEBUG_SOURCE_API:
-		spdlog::debug("Source: API");
+		spdlog::debug("\tSource: API");
 		break;
 	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
-		spdlog::debug("Source: Window System");
+		spdlog::debug("\tSource: Window System");
 		break;
 	case GL_DEBUG_SOURCE_SHADER_COMPILER:
-		spdlog::debug("Source: Shader Compiler");
+		spdlog::debug("\tSource: Shader Compiler");
 		break;
 	case GL_DEBUG_SOURCE_THIRD_PARTY:
-		spdlog::debug("Source: Third Party");
+		spdlog::debug("\tSource: Third Party");
 		break;
 	case GL_DEBUG_SOURCE_APPLICATION:
-		spdlog::debug("Source: Application");
+		spdlog::debug("\tSource: Application");
 		break;
 	case GL_DEBUG_SOURCE_OTHER:
-		spdlog::debug("Source: Other");
+		spdlog::debug("\tSource: Other");
 		break;
 	}
 	switch (type) {
 	case GL_DEBUG_TYPE_ERROR:
-		spdlog::debug("Type: Error");
+		spdlog::debug("\tType: Error");
 		break;
 	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-		spdlog::debug("Type: Deprecated Behaviour");
+		spdlog::debug("\tType: Deprecated Behaviour");
 		break;
 	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-		spdlog::debug("Type: Undefined Behaviour");
+		spdlog::debug("\tType: Undefined Behaviour");
 		break;
 	case GL_DEBUG_TYPE_PORTABILITY:
-		spdlog::debug("Type: Portability");
+		spdlog::debug("\tType: Portability");
 		break;
 	case GL_DEBUG_TYPE_PERFORMANCE:
-		spdlog::debug("Type: Performance");
+		spdlog::debug("\tType: Performance");
 		break;
 	case GL_DEBUG_TYPE_MARKER:
-		spdlog::debug("Type: Marker");
+		spdlog::debug("\tType: Marker");
 		break;
 	case GL_DEBUG_TYPE_PUSH_GROUP:
-		spdlog::debug("Type: Push Group");
+		spdlog::debug("\tType: Push Group");
 		break;
 	case GL_DEBUG_TYPE_POP_GROUP:
-		spdlog::debug("Type: Pop Group");
+		spdlog::debug("\tType: Pop Group");
 		break;
 	case GL_DEBUG_TYPE_OTHER:
-		spdlog::debug("Type: Other");
+		spdlog::debug("\tType: Other");
 		break;
 	}
 	switch (severity) {
 	case GL_DEBUG_SEVERITY_HIGH:
-		spdlog::debug("Severity: high");
+		spdlog::debug("\tSeverity: high");
+		std::exit(-1);
 		break;
 	case GL_DEBUG_SEVERITY_MEDIUM:
-		spdlog::debug("Severity: medium");
+		spdlog::debug("\tSeverity: medium");
 		break;
 	case GL_DEBUG_SEVERITY_LOW:
-		spdlog::debug("Severity: low");
+		spdlog::debug("\tSeverity: low");
 		break;
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
-		spdlog::debug("Severity: notification");
+		spdlog::debug("\tSeverity: notification");
 		break;
 	}
 }

@@ -4,3 +4,4 @@ external/
 .gdb_history
 .renderdoc
 dump.csv
+./compile_commands.json

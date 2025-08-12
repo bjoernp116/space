@@ -16,7 +16,9 @@ class Renderer {
 	void draw(const Entity &entity, const ShaderProgram &shader_program) const;
 	void draw(const ShaderProgram &shader_program) const;
 	void push(const Entity &entity);
+	Light *push(const Light &light);
 
   private:
 	std::vector<Entity> entities;
+	std::vector<Light> lights;
 };

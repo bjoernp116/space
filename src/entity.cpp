@@ -1,4 +1,5 @@
 #include "entity.h"
+#include <glm/fwd.hpp>
 #include <glm/glm.hpp>
 
 Entity::Entity(Mesh *mesh) : mesh(mesh) {}

@@ -3,7 +3,6 @@
 #include "entity.h"
 #include "input.h"
 #include "mesh.h"
-#include "shader.h"
 #include "transform.h"
 #include "utils.h"
 #include "renderer.h"
@@ -82,11 +81,21 @@ int Space::init() {
 	ShaderProgram shader_program("vertex.glsl", "fragment.glsl");
 	shader_program.use();
 
-	shader_program.declare({"u_View", "u_Projection", "u_Model"});
+	shader_program.declare({"view",
+	    "projection",
+	    "model",
+	    "mat_diffuse",
+	    "mat_specular",
+	    "mat_shininess",
+	    "light_size",
+	    "view_pos"});
+
+	Light light =
+	    Light(glm::vec3(0.0f, 2.0f, 2.0f), glm::vec3(1.0, 1.0, 0.9), 1.0f);
 
 	Renderer renderer((float)width / (float)height);
 	renderer.push(entity1);
-
+	Light *light_ptr = renderer.push(light);
 	float speed = 0.2;
 
 	while (!glfwWindowShouldClose(window)) {
@@ -106,6 +115,8 @@ int Space::init() {
 		if (input_handler.keymap[GLFW_KEY_D]) {
 			renderer.view.position += renderer.view.right() * glm::vec3(speed);
 		}
+
+		// light_ptr->position = renderer.view.position;
 
 		renderer.draw(shader_program);
 
