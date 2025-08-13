@@ -13,27 +13,49 @@ file(GLOB SRC_FILES
 
 add_executable(Space ${SRC_FILES})
 
-# Include GLFW
+# ---------------------------
+# GLFW
 find_package(glfw3 REQUIRED)
 
-# GLAD
-
-#add_subdirectory(external/glad)
-#target_link_libraries(Space glad)
-
+# ---------------------------
+# GLM & SPDLOG
 add_subdirectory(external/glm)
 add_subdirectory(external/spdlog)
 
+# ---------------------------
+# GLAD
 add_library(glad STATIC external/glad/src/glad.c)
 target_include_directories(glad PUBLIC external/glad/include)
-target_link_libraries(Space glad glm)
-target_link_libraries(Space glad spdlog)
 target_include_directories(Space PRIVATE external/glad/include)
 
-# Link GLFW
-target_link_libraries(Space glfw)
+# ---------------------------
+# IMGUI (vendored)
+add_library(imgui
+    external/imgui/imgui_demo.cpp
+    external/imgui/imgui.cpp
+    external/imgui/imgui_draw.cpp
+    external/imgui/imgui_tables.cpp
+    external/imgui/imgui_widgets.cpp
+    external/imgui/backends/imgui_impl_glfw.cpp
+    external/imgui/backends/imgui_impl_opengl3.cpp
+)
 
+target_include_directories(imgui PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/external
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/imgui
+)
 
+# ---------------------------
+# Link all libraries
+target_link_libraries(Space
+    glad
+    glm
+    spdlog
+    glfw
+    imgui
+)
+
+# ---------------------------
 # On Linux, link OpenGL
 if(UNIX)
     cmake_policy(SET CMP0072 NEW)

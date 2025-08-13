@@ -7,79 +7,133 @@
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/buffer.cpp.o -c /home/pollen/projects/space/src/buffer.cpp",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/imgui_demo.cpp.o -c /home/pollen/projects/space/external/imgui/imgui_demo.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/imgui_demo.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/imgui_demo.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/imgui.cpp.o -c /home/pollen/projects/space/external/imgui/imgui.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/imgui.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/imgui.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/imgui_draw.cpp.o -c /home/pollen/projects/space/external/imgui/imgui_draw.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/imgui_draw.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/imgui_draw.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/imgui_tables.cpp.o -c /home/pollen/projects/space/external/imgui/imgui_tables.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/imgui_tables.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/imgui_tables.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/imgui_widgets.cpp.o -c /home/pollen/projects/space/external/imgui/imgui_widgets.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/imgui_widgets.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/imgui_widgets.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/backends/imgui_impl_glfw.cpp.o -c /home/pollen/projects/space/external/imgui/backends/imgui_impl_glfw.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/backends/imgui_impl_glfw.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/backends/imgui_impl_glfw.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++  -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/imgui.dir/external/imgui/backends/imgui_impl_opengl3.cpp.o -c /home/pollen/projects/space/external/imgui/backends/imgui_impl_opengl3.cpp",
+  "file": "/home/pollen/projects/space/external/imgui/backends/imgui_impl_opengl3.cpp",
+  "output": "CMakeFiles/imgui.dir/external/imgui/backends/imgui_impl_opengl3.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/buffer.cpp.o -c /home/pollen/projects/space/src/buffer.cpp",
   "file": "/home/pollen/projects/space/src/buffer.cpp",
   "output": "CMakeFiles/Space.dir/src/buffer.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/entity.cpp.o -c /home/pollen/projects/space/src/entity.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/entity.cpp.o -c /home/pollen/projects/space/src/entity.cpp",
   "file": "/home/pollen/projects/space/src/entity.cpp",
   "output": "CMakeFiles/Space.dir/src/entity.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/input.cpp.o -c /home/pollen/projects/space/src/input.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/input.cpp.o -c /home/pollen/projects/space/src/input.cpp",
   "file": "/home/pollen/projects/space/src/input.cpp",
   "output": "CMakeFiles/Space.dir/src/input.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/light.cpp.o -c /home/pollen/projects/space/src/light.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/light.cpp.o -c /home/pollen/projects/space/src/light.cpp",
   "file": "/home/pollen/projects/space/src/light.cpp",
   "output": "CMakeFiles/Space.dir/src/light.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/main.cpp.o -c /home/pollen/projects/space/src/main.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/main.cpp.o -c /home/pollen/projects/space/src/main.cpp",
   "file": "/home/pollen/projects/space/src/main.cpp",
   "output": "CMakeFiles/Space.dir/src/main.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/material.cpp.o -c /home/pollen/projects/space/src/material.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/material.cpp.o -c /home/pollen/projects/space/src/material.cpp",
   "file": "/home/pollen/projects/space/src/material.cpp",
   "output": "CMakeFiles/Space.dir/src/material.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/mesh.cpp.o -c /home/pollen/projects/space/src/mesh.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/mesh.cpp.o -c /home/pollen/projects/space/src/mesh.cpp",
   "file": "/home/pollen/projects/space/src/mesh.cpp",
   "output": "CMakeFiles/Space.dir/src/mesh.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/renderer.cpp.o -c /home/pollen/projects/space/src/renderer.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/primatives.cpp.o -c /home/pollen/projects/space/src/primatives.cpp",
+  "file": "/home/pollen/projects/space/src/primatives.cpp",
+  "output": "CMakeFiles/Space.dir/src/primatives.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/renderer.cpp.o -c /home/pollen/projects/space/src/renderer.cpp",
   "file": "/home/pollen/projects/space/src/renderer.cpp",
   "output": "CMakeFiles/Space.dir/src/renderer.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/resource_manager.cpp.o -c /home/pollen/projects/space/src/resource_manager.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/resource_manager.cpp.o -c /home/pollen/projects/space/src/resource_manager.cpp",
   "file": "/home/pollen/projects/space/src/resource_manager.cpp",
   "output": "CMakeFiles/Space.dir/src/resource_manager.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/shader.cpp.o -c /home/pollen/projects/space/src/shader.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/shader.cpp.o -c /home/pollen/projects/space/src/shader.cpp",
   "file": "/home/pollen/projects/space/src/shader.cpp",
   "output": "CMakeFiles/Space.dir/src/shader.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/space.cpp.o -c /home/pollen/projects/space/src/space.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/space.cpp.o -c /home/pollen/projects/space/src/space.cpp",
   "file": "/home/pollen/projects/space/src/space.cpp",
   "output": "CMakeFiles/Space.dir/src/space.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/transform.cpp.o -c /home/pollen/projects/space/src/transform.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/transform.cpp.o -c /home/pollen/projects/space/src/transform.cpp",
   "file": "/home/pollen/projects/space/src/transform.cpp",
   "output": "CMakeFiles/Space.dir/src/transform.cpp.o"
 },
 {
   "directory": "/home/pollen/projects/space/build",
-  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -g -std=gnu++11 -o CMakeFiles/Space.dir/src/utils.cpp.o -c /home/pollen/projects/space/src/utils.cpp",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/ui.cpp.o -c /home/pollen/projects/space/src/ui.cpp",
+  "file": "/home/pollen/projects/space/src/ui.cpp",
+  "output": "CMakeFiles/Space.dir/src/ui.cpp.o"
+},
+{
+  "directory": "/home/pollen/projects/space/build",
+  "command": "/sbin/c++ -DSPDLOG_COMPILED_LIB -I/home/pollen/projects/space/external/glad/include -I/home/pollen/projects/space/external/glm -I/home/pollen/projects/space/external/spdlog/include -I/home/pollen/projects/space/external -I/home/pollen/projects/space/external/imgui -g -std=gnu++11 -o CMakeFiles/Space.dir/src/utils.cpp.o -c /home/pollen/projects/space/src/utils.cpp",
   "file": "/home/pollen/projects/space/src/utils.cpp",
   "output": "CMakeFiles/Space.dir/src/utils.cpp.o"
 },

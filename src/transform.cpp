@@ -1,12 +1,13 @@
 #include "transform.h"
+#include "glm/fwd.hpp"
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/matrix.hpp>
 
-Transform::Transform() {}
+Transform::Transform() : scale(glm::vec3(1.0f)) {}
 
-Transform::Transform(glm::vec3 pos) : position(pos) {}
+Transform::Transform(glm::vec3 pos) : position(pos), scale(glm::vec3(1.0f)) {}
 
 glm::mat4 Transform::matrix() const {
 	glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);

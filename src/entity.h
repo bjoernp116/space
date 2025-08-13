@@ -8,10 +8,11 @@
 
 class Entity {
   public:
+	const char *name;
 	Mesh *mesh;
 	Transform transform;
 	Material material;
 
-	Entity(Mesh *mesh);
-	Entity(Mesh *mesh, Transform transform);
+	Entity(const char *name, Mesh *mesh);
+	Entity(const char *name, Mesh *mesh, Transform transform);
 };

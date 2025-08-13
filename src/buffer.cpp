@@ -9,22 +9,36 @@
 VertexBuffer::VertexBuffer() {
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
-	spdlog::debug("VB{0} CREATED!", id);
+	spdlog::debug("VB{0}: created", id);
 }
 
 VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
 	glNamedBufferData(id, size, data, GL_STATIC_DRAW);
-	spdlog::debug("VB{0} CREATED AND FILLED!", id);
+	for (int i = 0; i < size; i += 1)
+		spdlog::debug("VB{0}, index {1}: {2}",
+		    id,
+		    i,
+		    reinterpret_cast<const float *>(data)[i]);
+
+	spdlog::debug("VB{0}: created and filled, vertecies: {1}", id, size);
 }
 
 void VertexBuffer::add_data(const std::vector<float> &data) const {
-	glNamedBufferData(id, 120, (void *)data.data(), GL_STATIC_DRAW);
+	glNamedBufferData(id,
+	    data.size() * sizeof(float),
+	    (void *)data.data(),
+	    GL_STATIC_DRAW);
+	spdlog::debug("VB{3}: Vertex size: {0} * {1} = {2}",
+	    data.size(),
+	    sizeof(float),
+	    data.size() * sizeof(float),
+	    id);
 }
 
 VertexBuffer::~VertexBuffer() {
-	spdlog::warn("VB{0} DELETED!", id);
+	spdlog::warn("VB{0}: deleted", id);
 	glDeleteBuffers(1, &id);
 }
 
@@ -34,7 +48,7 @@ VertexBuffer::VertexBuffer(VertexBuffer &&other) noexcept {
 }
 
 VertexBuffer &VertexBuffer::operator=(VertexBuffer &&other) noexcept {
-	spdlog::warn("VB{0} DELETED!", id);
+	spdlog::warn("VB{0}: deleted", id);
 	if (this != &other) {
 		glDeleteBuffers(1, &id); // clean old buffer
 		id = other.id;
@@ -48,16 +62,23 @@ IndexBuffer::IndexBuffer(const unsigned int *data, unsigned int count)
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
 	glNamedBufferData(id, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+	spdlog::debug("IB{0}: created and filled, indecies: {1}", id, count);
 }
 
 IndexBuffer::IndexBuffer() {
 	glCreateBuffers(1, &id);
 	assert(id != 0 && "Failed to generate VertexBuffer ID");
+	spdlog::debug("IB{0}: created", id);
 }
 
 void IndexBuffer::add_data(const std::vector<unsigned int> &data) const {
 	unsigned int size = data.size() * sizeof(unsigned int);
 	glNamedBufferData(id, size, data.data(), GL_STATIC_DRAW);
+	spdlog::debug("IB{3}: Index size: {0} * {1} = {2}",
+	    data.size(),
+	    sizeof(float),
+	    data.size() * sizeof(float),
+	    id);
 }
 
 IndexBuffer::IndexBuffer(IndexBuffer &&other) noexcept {
@@ -75,6 +96,7 @@ IndexBuffer &IndexBuffer::operator=(IndexBuffer &&other) noexcept {
 }
 
 IndexBuffer::~IndexBuffer() {
+	spdlog::warn("IB{0}: deleted", id);
 	glDeleteBuffers(1, &id);
 }
 
@@ -118,7 +140,7 @@ unsigned int VertexBufferElement::size() const {
 VertexArray::VertexArray() {
 	glCreateVertexArrays(1, &id);
 	glBindVertexArray(id);
-	spdlog::debug("VAO: VAO CREATED: {}", id);
+	spdlog::debug("VAO{0}: created", id);
 }
 
 VertexArray::~VertexArray() {
@@ -128,7 +150,7 @@ VertexArray::~VertexArray() {
 void VertexArray::add_buffer(const VertexBuffer &vb,
     const VertexBufferLayout &layout) {
 
-	spdlog::debug("VAO: ADD BUFFER!");
+	spdlog::debug("VAO{0}: <- VB{1}", id, vb.id);
 
 	glVertexArrayVertexBuffer(id, 0, vb.id, 0, layout.stride);
 
@@ -136,7 +158,7 @@ void VertexArray::add_buffer(const VertexBuffer &vb,
 	unsigned int offset = 0;
 	for (unsigned int i = 0; i < elements.size(); i++) {
 		const auto &element = elements[i];
-		spdlog::debug("VAO: FORMAT LAYOUT {}", 0);
+		spdlog::debug("VAO{0}: FORMAT LAYOUT {1}", id, 0);
 
 		glEnableVertexArrayAttrib(id, i);
 
@@ -159,6 +181,7 @@ void VertexArray::add_buffer(const VertexBuffer &vb,
 }
 
 void VertexArray::add_buffer(const IndexBuffer &ib) {
+	spdlog::debug("VAO{0}: <- IB{1}", id, ib.id);
 	glVertexArrayElementBuffer(id, ib.id);
 }
 

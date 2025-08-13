@@ -3,6 +3,10 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 
+#include <imgui/imgui.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+
 int main() {
 	spdlog::set_level(spdlog::level::debug);
 	glfwInit();

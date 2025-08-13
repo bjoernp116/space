@@ -2,6 +2,6 @@
 #include <glm/fwd.hpp>
 #include <glm/glm.hpp>
 
-Entity::Entity(Mesh *mesh) : mesh(mesh) {}
-Entity::Entity(Mesh *mesh, Transform transform)
-    : mesh(mesh), transform(transform) {}
+Entity::Entity(const char *name, Mesh *mesh) : name(name), mesh(mesh) {}
+Entity::Entity(const char *name, Mesh *mesh, Transform transform)
+    : name(name), mesh(mesh), transform(transform) {}

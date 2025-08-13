@@ -2,10 +2,15 @@
 #include <cctype>
 #include <iostream>
 #include <spdlog/spdlog.h>
+#include <string>
 #include "buffer.h"
 #include "glm/geometric.hpp"
 #include "utils.h"
 #include "mesh.h"
+
+const std::string Mesh::class_name() const {
+	return std::string("Mesh");
+}
 
 Mesh::Mesh(const void *v_data,
     unsigned int v_size,
@@ -16,6 +21,7 @@ Mesh::Mesh(const void *v_data,
 	VertexBufferLayout layout;
 	layout.push<float>(3);
 	vao.add_buffer(vb, layout);
+	vao.add_buffer(ib);
 }
 
 const std::string MESH_PATH = "./meshes/";
@@ -49,10 +55,15 @@ std::vector<float> compute_flat_normals(std::vector<float> vertecies,
 		    vertecies[faces[i + 2] + 1],
 		    vertecies[faces[i + 2] + 2]);
 
+		spdlog::debug("p1: ({0}, {1}, {2})", p1.x, p1.y, p1.z);
+		spdlog::debug("p2: ({0}, {1}, {2})", p2.x, p2.y, p2.z);
+		spdlog::debug("p3: ({0}, {1}, {2})", p3.x, p3.y, p3.z);
+
 		glm::vec3 edge1 = p2 - p1;
 		glm::vec3 edge2 = p3 - p1;
 
 		glm::vec3 normal = glm::normalize(glm::cross(edge1, edge2));
+		spdlog::debug("normal: ({0}, {1}, {2})", normal.x, normal.y, normal.z);
 
 		normals[faces[i + 0] + 0] = normal.x;
 		normals[faces[i + 0] + 1] = normal.y;
@@ -104,8 +115,6 @@ Mesh::Mesh(const char *path) {
 			continue;
 		}
 	}
-	std::vector<float> vertnorm;
-	VertexBufferLayout layout;
 	if (vertecies.size() == normals.size()) {
 		spdlog::debug("Using normals");
 	} else {
@@ -114,16 +123,12 @@ Mesh::Mesh(const char *path) {
 		    normals.size());
 		normals = compute_flat_normals(vertecies, indecies);
 	}
-	vertnorm = intertwine_buffers(vertecies, normals);
+	VertexBufferLayout layout;
+	std::vector<float> vertnorm = intertwine_buffers(vertecies, normals);
 	layout.push<float>(3);
 	layout.push<float>(3);
 	// for (float n : vertnorm)
 	//	spdlog::debug("{0}", n);
-	spdlog::debug("VB{3}: Vertex size: {0} * {1} = {2}",
-	    vertnorm.size(),
-	    sizeof(float),
-	    vertnorm.size() * sizeof(float),
-	    vb.id);
 
 	vb.add_data(vertnorm);
 	ib.add_data(indecies);
@@ -139,4 +144,20 @@ unsigned int Mesh::get_index_count() const {
 
 void Mesh::bind_vao() const {
 	vao.bind();
+}
+
+Mesh::Mesh(const std::vector<float> vertecies,
+    const std::vector<unsigned int> indecies) {
+	// std::vector<float> normals = compute_flat_normals(vertecies, indecies);
+	// std::vector<float> vertnorm = intertwine_buffers(vertecies, normals);
+
+	VertexBufferLayout layout;
+	layout.push<float>(3);
+	layout.push<float>(3);
+	vb.add_data(vertecies);
+	ib.add_data(indecies);
+	index_count = indecies.size();
+
+	vao.add_buffer(vb, layout);
+	vao.add_buffer(ib);
 }

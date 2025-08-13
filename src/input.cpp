@@ -1,4 +1,5 @@
 #include "input.h"
+#include "spdlog/spdlog.h"
 #include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
 
@@ -21,7 +22,23 @@ void InputHandler::mouse_callback(
 	}
 }
 
+void InputHandler::toggle_mouse_lock(GLFWwindow *window, ImGuiIO &io) {
+	if (keymap[GLFW_KEY_F12]) {
+		mouse_locked = false;
+	}
+	if (keymap[GLFW_KEY_F11]) {
+		mouse_locked = true;
+	}
+	if (!mouse_locked) {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	} else {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+}
+
 void InputHandler::handle_mouse(Transform *camera) {
+	if (!mouse_locked)
+		return;
 	float sensitivity = 0.0012f;
 
 	if (first) {
