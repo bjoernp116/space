@@ -1,24 +1,35 @@
+#include "renderer.h"
 #include "input.h"
 #include "spdlog/spdlog.h"
 #include <GLFW/glfw3.h>
 #include <glm/gtc/constants.hpp>
 
+InputHandler::InputHandler() {
+	for (int i = 0; i < 1024; i++) {
+		keymap[i] = false;
+	}
+}
+
 void InputHandler::key_callback(
     GLFWwindow *window, int key, int scancode, int action, int mods) {
-	InputHandler *self =
-	    static_cast<InputHandler *>(glfwGetWindowUserPointer(window));
+	Renderer *self = static_cast<Renderer *>(glfwGetWindowUserPointer(window));
 	if (self) {
-		self->keymap[key] = (action != GLFW_RELEASE);
+		/*if (ImGui::GetIO().WantCaptureKeyboard) {
+		    spdlog::debug("ImGui want {0}", key);
+		} else {
+		    spdlog::debug("ImGui dont want {0}", key);
+		}*/
+		// spdlog::debug("{}", action);
+		self->input_handler.keymap[key] = (action != GLFW_RELEASE);
 	}
 }
 
 void InputHandler::mouse_callback(
     GLFWwindow *window, double xpos, double ypos) {
-	InputHandler *self =
-	    static_cast<InputHandler *>(glfwGetWindowUserPointer(window));
+	Renderer *self = static_cast<Renderer *>(glfwGetWindowUserPointer(window));
 	if (self) {
-		self->xpos = xpos;
-		self->ypos = ypos;
+		self->input_handler.xpos = xpos;
+		self->input_handler.ypos = ypos;
 	}
 }
 
@@ -63,4 +74,22 @@ void InputHandler::handle_mouse(Transform *camera) {
 	camera->rotation.x = glm::clamp(camera->rotation.x,
 	    -glm::half_pi<float>() + 0.01f,
 	    glm::half_pi<float>() - 0.01f);
+}
+
+void Renderer::basic_camera_movement(float speed) {
+
+	if (input_handler.keymap[GLFW_KEY_W]) {
+		view.position += view.forward() * glm::vec3(speed);
+	}
+	if (input_handler.keymap[GLFW_KEY_S]) {
+		view.position -= view.forward() * glm::vec3(speed);
+	}
+	if (input_handler.keymap[GLFW_KEY_A]) {
+		view.position -= view.right() * glm::vec3(speed);
+	}
+	if (input_handler.keymap[GLFW_KEY_D]) {
+		view.position += view.right() * glm::vec3(speed);
+	}
+
+	input_handler.handle_mouse(&view);
 }

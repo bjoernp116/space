@@ -11,6 +11,8 @@ class InputHandler {
 	bool first;
 	bool mouse_locked;
 
+	InputHandler();
+
 	static void key_callback(
 	    GLFWwindow *window, int key, int scancode, int action, int mods);
 

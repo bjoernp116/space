@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include "glm/fwd.hpp"
+#include "texture.h"
 
 class VertexBuffer {
   public:
@@ -12,6 +14,7 @@ class VertexBuffer {
 	~VertexBuffer();
 
 	void add_data(const std::vector<float> &data) const;
+	void add_data(const std::vector<glm::vec3> &data) const;
 
 	// Delete copy constructor and copy assignment
 	VertexBuffer(const VertexBuffer &) = delete;
@@ -32,6 +35,8 @@ class IndexBuffer {
 	IndexBuffer();
 
 	void add_data(const std::vector<unsigned int> &data) const;
+	void add_data(const std::vector<glm::uvec3> &data) const;
+	void add_data(const std::vector<glm::uvec2> &data) const;
 
 	// Delete copy constructor and copy assignment
 	IndexBuffer(const IndexBuffer &) = delete;
@@ -40,6 +45,17 @@ class IndexBuffer {
 	// Implement move constructor and move assignment if needed
 	IndexBuffer(IndexBuffer &&other) noexcept;
 	IndexBuffer &operator=(IndexBuffer &&other) noexcept;
+};
+
+class FrameBuffer {
+  public:
+	unsigned int id;
+
+	FrameBuffer();
+	~FrameBuffer();
+	void attach_texture(Texture texture) const;
+	void bind() const;
+	void unbind() const;
 };
 
 struct VertexBufferElement {

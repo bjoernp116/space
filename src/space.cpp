@@ -7,7 +7,7 @@
 #include "entity.h"
 #include "input.h"
 #include "mesh.h"
-#include "primatives.h"
+#include "primitives.h"
 #include "transform.h"
 #include "ui.h"
 #include "utils.h"
@@ -17,9 +17,9 @@
 #include <glm/fwd.hpp>
 #include <spdlog/spdlog.h>
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-	glViewport(0, 0, width, height);
-}
+/*void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+    glViewport(0, 0, width, height);
+}*/
 
 Space::Space(unsigned int w, unsigned int h) {
 	width = w;
@@ -39,8 +39,6 @@ int Space::init() {
 	glfwMakeContextCurrent(window);
 	// glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	InputHandler input_handler;
-	glfwSetWindowUserPointer(window, &input_handler);
 	glfwSetKeyCallback(window, InputHandler::key_callback);
 
 	glfwSetCursorPosCallback(window, InputHandler::mouse_callback);
@@ -63,6 +61,7 @@ int Space::init() {
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags &= ~ImGuiConfigFlags_NavEnableKeyboard;
 
 	ImGui::StyleColorsDark();
 	float main_scale =
@@ -80,7 +79,8 @@ int Space::init() {
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // ensures callback is called
-	                                       // synchronously
+	glDisable(GL_CULL_FACE);
+	// synchronously
 	glDebugMessageCallback(debug_callback, nullptr);
 	glDebugMessageControl(GL_DONT_CARE,
 	    GL_DONT_CARE,
@@ -88,9 +88,17 @@ int Space::init() {
 	    0,
 	    nullptr,
 	    GL_TRUE);
+	ShaderProgram shader_program("vertex.glsl", "fragment.glsl");
+	shader_program.use();
+
+	Renderer renderer(width, height, window);
 
 	Box box;
+	box.shader_program = &shader_program;
 	Mesh pyramid("pyramid.obj");
+	pyramid.shader_program = &shader_program;
+	// DebugMesh debug_box(&box);
+	// debug_box.shader_program = renderer.gizmo_shader;
 
 	Transform transform(glm::vec3(0.0f));
 	Entity box_entity("Box", &box, transform);
@@ -98,8 +106,7 @@ int Space::init() {
 	transform.position.y += 0.5;
 	Entity pyramid_entity("Pyramid", &pyramid, transform);
 
-	ShaderProgram shader_program("vertex.glsl", "fragment.glsl");
-	shader_program.use();
+	// Entity debug_entity("Debug Entity", &debug_box, transform);
 
 	shader_program.declare({"view",
 	    "projection",
@@ -113,9 +120,10 @@ int Space::init() {
 	Light light =
 	    Light(glm::vec3(0.0f, 2.0f, 2.0f), glm::vec3(1.0, 1.0, 0.9), 1.0f);
 
-	Renderer renderer((float)width / (float)height);
 	renderer.push(box_entity);
 	renderer.push(pyramid_entity);
+	// renderer.push(debug_entity);
+
 	Light *light_ptr = renderer.push(light);
 	float speed = 0.2;
 
@@ -128,45 +136,24 @@ int Space::init() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		input_handler.toggle_mouse_lock(window, io);
+		renderer.input_handler.toggle_mouse_lock(window, io);
 
 		renderer.draw_ui(io);
-		ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(0, 0, 0, 0));
-		ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, IM_COL32(0, 0, 0, 0));
-		ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoBackground);
-
 		ImVec2 viewport_panel_size = ImGui::GetContentRegionAvail();
 		ImVec2 viewport_pos = ImGui::GetWindowPos();
 
-		glViewport((int)viewport_pos.x,
+		/*glViewport(viewport_pos.x,
 		    display_h - (int)viewport_pos.y - (int)viewport_panel_size.y,
 		    (int)viewport_panel_size.x,
 		    (int)viewport_panel_size.y);
+		    */
 
 		// Clear only viewport area before drawing scene
-		renderer.clear();
 
 		// Update camera movement here if you want
-		if (input_handler.keymap[GLFW_KEY_W]) {
-			renderer.view.position +=
-			    renderer.view.forward() * glm::vec3(speed);
-		}
-		if (input_handler.keymap[GLFW_KEY_S]) {
-			renderer.view.position -=
-			    renderer.view.forward() * glm::vec3(speed);
-		}
-		if (input_handler.keymap[GLFW_KEY_A]) {
-			renderer.view.position -= renderer.view.right() * glm::vec3(speed);
-		}
-		if (input_handler.keymap[GLFW_KEY_D]) {
-			renderer.view.position += renderer.view.right() * glm::vec3(speed);
-		}
+		renderer.basic_camera_movement(speed);
 
-		renderer.draw(shader_program);
-
-		ImGui::End();
-		ImGui::PopStyleColor(2);
-		input_handler.handle_mouse(&renderer.view);
+		renderer.draw();
 
 		ImGui::Render();
 

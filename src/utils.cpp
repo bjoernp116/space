@@ -11,9 +11,10 @@ std::string read_file(std::string path) {
 	std::ifstream stream(path);
 
 	if (!stream.good()) {
-		std::cerr << "Failed to open file " << path << std::endl;
+		spdlog::error("Failed to open file {0}", path);
 		return "";
 	} else {
+		spdlog::debug("Opened file {0}", path);
 		std::ostringstream ss;
 		ss << stream.rdbuf();
 		stream.close();
@@ -116,7 +117,7 @@ void GLAPIENTRY debug_callback(GLenum source,
 	switch (severity) {
 	case GL_DEBUG_SEVERITY_HIGH:
 		spdlog::debug("\tSeverity: high");
-		std::exit(-1);
+		// std::exit(-1);
 		break;
 	case GL_DEBUG_SEVERITY_MEDIUM:
 		spdlog::debug("\tSeverity: medium");

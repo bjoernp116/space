@@ -1,6 +1,9 @@
 #include <cassert>
 #include <glad/glad.h>
 #include "buffer.h"
+#include <glm/glm.hpp>
+#include "glm/fwd.hpp"
+#include "texture.h"
 #include <spdlog/spdlog.h>
 #include <vector>
 
@@ -25,6 +28,18 @@ VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
 	spdlog::debug("VB{0}: created and filled, vertecies: {1}", id, size);
 }
 
+void VertexBuffer::add_data(const std::vector<glm::vec3> &data) const {
+	glNamedBufferData(id,
+	    data.size() * sizeof(glm::vec3),
+	    (void *)data.data(),
+	    GL_STATIC_DRAW);
+	spdlog::debug("VB{3}: Vertex size: {0} * {1} = {2}",
+	    data.size(),
+	    sizeof(glm::vec3),
+	    data.size() * sizeof(glm::vec3),
+	    id);
+}
+
 void VertexBuffer::add_data(const std::vector<float> &data) const {
 	glNamedBufferData(id,
 	    data.size() * sizeof(float),
@@ -32,8 +47,8 @@ void VertexBuffer::add_data(const std::vector<float> &data) const {
 	    GL_STATIC_DRAW);
 	spdlog::debug("VB{3}: Vertex size: {0} * {1} = {2}",
 	    data.size(),
-	    sizeof(float),
-	    data.size() * sizeof(float),
+	    sizeof(glm::vec3),
+	    data.size() * sizeof(glm::vec3),
 	    id);
 }
 
@@ -72,12 +87,32 @@ IndexBuffer::IndexBuffer() {
 }
 
 void IndexBuffer::add_data(const std::vector<unsigned int> &data) const {
-	unsigned int size = data.size() * sizeof(unsigned int);
+	unsigned int size = data.size() * sizeof(glm::uvec3);
 	glNamedBufferData(id, size, data.data(), GL_STATIC_DRAW);
 	spdlog::debug("IB{3}: Index size: {0} * {1} = {2}",
 	    data.size(),
-	    sizeof(float),
-	    data.size() * sizeof(float),
+	    sizeof(glm::uvec3),
+	    data.size() * sizeof(glm::uvec3),
+	    id);
+}
+
+void IndexBuffer::add_data(const std::vector<glm::uvec3> &data) const {
+	unsigned int size = data.size() * sizeof(glm::uvec3);
+	glNamedBufferData(id, size, data.data(), GL_STATIC_DRAW);
+	spdlog::debug("IB{3}: Index size: {0} * {1} = {2}",
+	    data.size(),
+	    sizeof(glm::uvec3),
+	    data.size() * sizeof(glm::uvec3),
+	    id);
+}
+
+void IndexBuffer::add_data(const std::vector<glm::uvec2> &data) const {
+	unsigned int size = data.size() * sizeof(glm::uvec2);
+	glNamedBufferData(id, size, data.data(), GL_STATIC_DRAW);
+	spdlog::debug("IB{3}: Index size: {0} * {1} = {2}",
+	    data.size(),
+	    sizeof(glm::uvec2),
+	    data.size() * sizeof(glm::uvec2),
 	    id);
 }
 
@@ -97,6 +132,38 @@ IndexBuffer &IndexBuffer::operator=(IndexBuffer &&other) noexcept {
 
 IndexBuffer::~IndexBuffer() {
 	spdlog::warn("IB{0}: deleted", id);
+	glDeleteBuffers(1, &id);
+}
+
+FrameBuffer::FrameBuffer() {
+	glCreateFramebuffers(1, &id);
+	assert(id != 0 && "Failed to generate VertexBuffer ID");
+	spdlog::debug("FB{0}: created!", id);
+}
+
+void FrameBuffer::attach_texture(Texture texture) const {
+
+	glNamedFramebufferTexture(id, GL_COLOR_ATTACHMENT0, texture.id, 0);
+	if (glCheckNamedFramebufferStatus(id, GL_FRAMEBUFFER) !=
+	    GL_FRAMEBUFFER_COMPLETE) {
+		spdlog::error("FB{0}: failed to attach TEX{1}!", id, texture.id);
+	} else {
+		spdlog::debug("FB{0}: attached TEX{1}!", id, texture.id);
+	}
+}
+
+void FrameBuffer::bind() const {
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
+	// spdlog::debug("FB{0}: bound!", id);
+}
+
+void FrameBuffer::unbind() const {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// spdlog::debug("FB{0}: unbound!", id);
+}
+
+FrameBuffer::~FrameBuffer() {
+	spdlog::warn("FB{0}: deleted", id);
 	glDeleteBuffers(1, &id);
 }
 

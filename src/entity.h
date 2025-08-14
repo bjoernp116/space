@@ -9,6 +9,8 @@
 class Entity {
   public:
 	const char *name;
+	bool visible = true;
+	bool debug = false;
 	Mesh *mesh;
 	Transform transform;
 	Material material;

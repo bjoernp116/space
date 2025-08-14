@@ -55,15 +55,17 @@ std::vector<float> compute_flat_normals(std::vector<float> vertecies,
 		    vertecies[faces[i + 2] + 1],
 		    vertecies[faces[i + 2] + 2]);
 
-		spdlog::debug("p1: ({0}, {1}, {2})", p1.x, p1.y, p1.z);
+		/*spdlog::debug("p1: ({0}, {1}, {2})", p1.x, p1.y, p1.z);
 		spdlog::debug("p2: ({0}, {1}, {2})", p2.x, p2.y, p2.z);
 		spdlog::debug("p3: ({0}, {1}, {2})", p3.x, p3.y, p3.z);
+		*/
 
 		glm::vec3 edge1 = p2 - p1;
 		glm::vec3 edge2 = p3 - p1;
 
 		glm::vec3 normal = glm::normalize(glm::cross(edge1, edge2));
-		spdlog::debug("normal: ({0}, {1}, {2})", normal.x, normal.y, normal.z);
+		// spdlog::debug("normal: ({0}, {1}, {2})", normal.x, normal.y,
+		// normal.z);
 
 		normals[faces[i + 0] + 0] = normal.x;
 		normals[faces[i + 0] + 1] = normal.y;
@@ -147,7 +149,63 @@ void Mesh::bind_vao() const {
 }
 
 Mesh::Mesh(const std::vector<float> vertecies,
-    const std::vector<unsigned int> indecies) {
+    const std::vector<unsigned int> indecies,
+    bool normal)
+    : normal(normal) {
+
+	VertexBufferLayout layout;
+	layout.push<float>(3);
+	layout.push<float>(3);
+	vb.add_data(vertecies);
+	ib.add_data(indecies);
+	index_count = indecies.size();
+
+	vao.add_buffer(vb, layout);
+	vao.add_buffer(ib);
+}
+
+Mesh::Mesh(const std::vector<glm::vec3> vertecies,
+    const std::vector<glm::uvec3> indecies,
+    bool normal)
+    : normal(normal) {
+
+	std::vector<glm::vec3> out(vertecies.size() * 2);
+	if (!normal) {
+		for (glm::vec3 vertex : vertecies) {
+			out.push_back(vertex);
+			out.push_back(glm::vec3(0.0f));
+		}
+	} else {
+		out = vertecies;
+	}
+
+	// std::vector<float> normals = compute_flat_normals(vertecies, indecies);
+	// std::vector<float> vertnorm = intertwine_buffers(vertecies, normals);
+
+	VertexBufferLayout layout;
+	layout.push<float>(3);
+	layout.push<float>(3);
+	vb.add_data(out);
+	ib.add_data(indecies);
+	index_count = indecies.size();
+
+	vao.add_buffer(vb, layout);
+	vao.add_buffer(ib);
+}
+
+Mesh::Mesh(const std::vector<glm::vec3> vertecies,
+    const std::vector<glm::uvec2> indecies,
+    bool normal)
+    : normal(normal) {
+	std::vector<glm::vec3> out(vertecies.size() * 2);
+	if (!normal) {
+		for (glm::vec3 vertex : vertecies) {
+			out.push_back(vertex);
+			out.push_back(glm::vec3(0.0f));
+		}
+	} else {
+		out = vertecies;
+	}
 	// std::vector<float> normals = compute_flat_normals(vertecies, indecies);
 	// std::vector<float> vertnorm = intertwine_buffers(vertecies, normals);
 
@@ -160,4 +218,26 @@ Mesh::Mesh(const std::vector<float> vertecies,
 
 	vao.add_buffer(vb, layout);
 	vao.add_buffer(ib);
+}
+
+std::vector<glm::vec3> Mesh::get_vertecies() const {
+	int size = 0;
+	glad_glGetNamedBufferParameteriv(vb.id, GL_BUFFER_SIZE, &size);
+	if (sizeof(glm::vec3) != 3 * sizeof(float)) {
+		spdlog::error("Vec3 is padded to size {0}", sizeof(glm::vec3));
+	}
+	std::vector<glm::vec3> vertecies(size / sizeof(glm::vec3));
+	glGetNamedBufferSubData(vb.id, 0, size, vertecies.data());
+	return vertecies;
+}
+
+std::vector<glm::uvec3> Mesh::get_indecies() const {
+	int size;
+	glad_glGetNamedBufferParameteriv(ib.id, GL_BUFFER_SIZE, &size);
+	if (sizeof(glm::uvec3) != 3 * sizeof(unsigned int)) {
+		spdlog::error("UVec3 is padded to size {0}", sizeof(glm::uvec3));
+	}
+	std::vector<glm::uvec3> indecies(size / sizeof(glm::uvec3));
+	glGetNamedBufferSubData(ib.id, 0, size, indecies.data());
+	return indecies;
 }

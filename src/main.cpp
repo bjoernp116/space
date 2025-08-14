@@ -8,6 +8,7 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 
 int main() {
+	assert(sizeof(glm::vec3) == 12);
 	spdlog::set_level(spdlog::level::debug);
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

@@ -1,8 +1,8 @@
 #pragma once
+#include <glad/glad.h>
 
 #include <string>
 #include <vector>
-#include <glad/glad.h>
 
 std::string read_file(std::string path);
 
