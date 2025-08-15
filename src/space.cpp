@@ -95,16 +95,16 @@ int Space::init() {
 
 	Box box;
 	box.shader_program = &shader_program;
-	Mesh pyramid("pyramid.obj");
-	pyramid.shader_program = &shader_program;
-	// DebugMesh debug_box(&box);
-	// debug_box.shader_program = renderer.gizmo_shader;
+	// Mesh pyramid("cube.obj");
+	// pyramid.shader_program = &shader_program;
+	//  DebugMesh debug_box(&box);
+	//  debug_box.shader_program = renderer.gizmo_shader;
 
 	Transform transform(glm::vec3(0.0f));
 	Entity box_entity("Box", &box, transform);
 
 	transform.position.y += 0.5;
-	Entity pyramid_entity("Pyramid", &pyramid, transform);
+	// Entity pyramid_entity("Pyramid", &pyramid, transform);
 
 	// Entity debug_entity("Debug Entity", &debug_box, transform);
 
@@ -121,8 +121,8 @@ int Space::init() {
 	    Light(glm::vec3(0.0f, 2.0f, 2.0f), glm::vec3(1.0, 1.0, 0.9), 1.0f);
 
 	renderer.push(box_entity);
-	renderer.push(pyramid_entity);
-	// renderer.push(debug_entity);
+	// renderer.push(pyramid_entity);
+	//  renderer.push(debug_entity);
 
 	Light *light_ptr = renderer.push(light);
 	float speed = 0.2;

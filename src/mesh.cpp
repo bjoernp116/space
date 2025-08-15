@@ -7,6 +7,7 @@
 #include "glm/geometric.hpp"
 #include "utils.h"
 #include "mesh.h"
+#include "obj.h"
 
 const std::string Mesh::class_name() const {
 	return std::string("Mesh");
@@ -26,17 +27,34 @@ Mesh::Mesh(const void *v_data,
 
 const std::string MESH_PATH = "./meshes/";
 
-std::vector<float> intertwine_buffers(const std::vector<float> buff1,
-    const std::vector<float> buff2) {
+std::vector<float> intertwine_buffers(const std::vector<float> v1,
+    const unsigned int v1_size,
+    const std::vector<float> v2,
+    const unsigned int v2_size) {
+	const float v1_ratio = (float)v1.size() / (float)v1_size;
+	const float v2_ratio = (float)v2.size() / (float)v2_size;
+	if (v1_ratio != v2_ratio) {
+		spdlog::error("Missaligned buffer intertwining: v1 = {0} / {1} = {2}, "
+		              "v2 = {3} / {4} = {5}",
+		    v1.size(),
+		    v1_size,
+		    v1_ratio,
+		    v2.size(),
+		    v2_size,
+		    v2_ratio);
+	}
 	std::vector<float> result;
-	result.reserve(buff1.size());
-	for (int i = 0; i < buff1.size(); i += 3) {
-		result.push_back(buff1[i + 0]);
-		result.push_back(buff1[i + 1]);
-		result.push_back(buff1[i + 2]);
-		result.push_back(buff2[i + 0]);
-		result.push_back(buff2[i + 1]);
-		result.push_back(buff2[i + 2]);
+	result.reserve(v1.size());
+
+	for (int i = 0; i < v1.size() / v1_size; i += v1_size) {
+		for (int j = 0; j < v1_size; j++) {
+			result.push_back(v1.at(i + j));
+			spdlog::debug("v1: {}", v1.at(i + j));
+		}
+		for (int j = 0; j < v2_size; j++) {
+			result.push_back(v2.at(i + j));
+			spdlog::debug("v2: {}", v1.at(i + j));
+		}
 	}
 	return result;
 }
@@ -82,51 +100,26 @@ std::vector<float> compute_flat_normals(std::vector<float> vertecies,
 
 Mesh::Mesh(const char *path) {
 	std::string file = read_file(MESH_PATH + path);
-	std::vector<float> vertecies;
-	std::vector<float> normals;
-	std::vector<unsigned int> indecies;
-	int line = 0;
-	for (std::string str : read_lines(file)) {
-		line += 1;
-		if (str.size() < 7 || str[0] == '#') {
-			continue;
-		}
-		std::vector<std::string> column = split(str, ' ');
-		if (!std::isalpha(column[0][0])) {
-			spdlog::error("Parser error: line {0}: missing command, got {1}",
-			    line,
-			    column[0]);
-			continue;
-		}
-		if (column[0][1] == 'n') {
-			normals.push_back(std::stof(column[1]));
-			normals.push_back(std::stof(column[2]));
-			normals.push_back(std::stof(column[3]));
-			continue;
-		}
-		if (column[0][0] == 'v') {
-			vertecies.push_back(std::stof(column[1]));
-			vertecies.push_back(std::stof(column[2]));
-			vertecies.push_back(std::stof(column[3]));
-			continue;
-		}
-		if (column[0][0] == 'f') {
-			indecies.push_back(std::stoi(column[1]) - 1);
-			indecies.push_back(std::stoi(column[2]) - 1);
-			indecies.push_back(std::stoi(column[3]) - 1);
-			continue;
-		}
-	}
+	ObjectFile objfile(path);
+	std::vector<float> vertecies = objfile.get_vertecies<float>();
+	std::vector<float> normals = objfile.get_normals<float>();
+	std::vector<unsigned int> indecies = objfile.get_indecies<unsigned int>();
+
 	if (vertecies.size() == normals.size()) {
 		spdlog::debug("Using normals");
 	} else {
 		spdlog::warn("Auto computing normals: vertecies: {0}, normals: {1}",
 		    vertecies.size(),
 		    normals.size());
-		normals = compute_flat_normals(vertecies, indecies);
+		spdlog::warn("Normal generator is not yet implemented!");
 	}
 	VertexBufferLayout layout;
-	std::vector<float> vertnorm = intertwine_buffers(vertecies, normals);
+	std::vector<float> vertnorm = intertwine_buffers(vertecies, 3, normals, 3);
+
+	for (float n : vertnorm) {
+		spdlog::debug("Vertnorm: {0}", n);
+	}
+
 	layout.push<float>(3);
 	layout.push<float>(3);
 	// for (float n : vertnorm)
@@ -169,7 +162,8 @@ Mesh::Mesh(const std::vector<glm::vec3> vertecies,
     bool normal)
     : normal(normal) {
 
-	std::vector<glm::vec3> out(vertecies.size() * 2);
+	std::vector<glm::vec3> out;
+	out.reserve(vertecies.size() * 2);
 	if (!normal) {
 		for (glm::vec3 vertex : vertecies) {
 			out.push_back(vertex);
@@ -177,6 +171,13 @@ Mesh::Mesh(const std::vector<glm::vec3> vertecies,
 		}
 	} else {
 		out = vertecies;
+	}
+
+	for (const auto &vertex : out) {
+		spdlog::debug("Output vertex: ({0}, {1}, {2})",
+		    vertex.x,
+		    vertex.y,
+		    vertex.z);
 	}
 
 	// std::vector<float> normals = compute_flat_normals(vertecies, indecies);
@@ -187,7 +188,7 @@ Mesh::Mesh(const std::vector<glm::vec3> vertecies,
 	layout.push<float>(3);
 	vb.add_data(out);
 	ib.add_data(indecies);
-	index_count = indecies.size();
+	index_count = indecies.size() * 3;
 
 	vao.add_buffer(vb, layout);
 	vao.add_buffer(ib);
@@ -214,7 +215,7 @@ Mesh::Mesh(const std::vector<glm::vec3> vertecies,
 	layout.push<float>(3);
 	vb.add_data(vertecies);
 	ib.add_data(indecies);
-	index_count = indecies.size();
+	index_count = indecies.size() * 2;
 
 	vao.add_buffer(vb, layout);
 	vao.add_buffer(ib);

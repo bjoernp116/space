@@ -123,7 +123,7 @@ void Renderer::draw() const {
 	for (Entity entity : entities) {
 		if (entity.visible)
 			draw(entity);
-		if (entity.debug)
+		if (entity.debug || entity.mesh->class_name() == "Debug Mesh")
 			draw_debug(entity);
 	}
 	fbo.unbind();
@@ -218,6 +218,11 @@ void Renderer::draw_ui(ImGuiIO &io) {
 	    entities[selected_entity].transform.scale.x,
 	    entities[selected_entity].transform.scale.y,
 	    entities[selected_entity].transform.scale.z);
+	if (entities[selected_entity].mesh->normal) {
+		ImGui::Text("Normals: explicit");
+	} else {
+		ImGui::Text("Normals: implicit");
+	}
 	ImGui::End();
 	ImGui::PopFont();
 }
