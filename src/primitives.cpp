@@ -206,7 +206,7 @@ const std::vector<unsigned int> box_index_flat = {
         box_index_data.size());
 } */
 
-Box::Box() : Mesh("cube.obj") {}
+Box::Box() : Mesh(ObjectFile("cube.obj")) {}
 
 const std::string Box::class_name() const {
 	return std::string("Box");

@@ -1,18 +1,18 @@
-
+#pragma once
 
 #include "glm/glm.hpp"
 #include <string>
 #include <vector>
-class ObjectFile {
+#include "file.h"
+class ObjectFile : public File {
 
 	std::vector<glm::vec3> vertecies;
 	std::vector<glm::vec3> normals;
-	std::vector<unsigned int> indecies;
+	std::vector<glm::uvec3> indecies;
 	unsigned int face_size;
-	std::string path;
 
   public:
-	ObjectFile(const char *);
+	ObjectFile(const char* path);
 
 	template <typename T> std::vector<T> get_vertecies() const;
 	template <typename T> std::vector<T> get_normals() const;

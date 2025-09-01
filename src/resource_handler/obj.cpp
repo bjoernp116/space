@@ -6,7 +6,7 @@
 
 #include "obj.h"
 #include "spdlog/spdlog.h"
-#include "utils.h"
+#include "../utils.h"
 
 const std::string MESH_PATH = "./meshes/";
 
@@ -25,6 +25,7 @@ template <typename T> std::vector<T> ObjectFile::get_normals() const {
 
 	return std::vector<T>(ptr, ptr + size);
 }
+
 template std::vector<float> ObjectFile::get_normals<float>() const;
 template std::vector<glm::vec3> ObjectFile::get_normals<glm::vec3>() const;
 
@@ -35,13 +36,11 @@ template <typename T> std::vector<T> ObjectFile::get_indecies() const {
 	return std::vector<T>(ptr, ptr + size);
 }
 template std::vector<unsigned int>
-ObjectFile::get_indecies<unsigned int>() const;
+    ObjectFile::get_indecies<unsigned int>() const;
 template std::vector<glm::uvec3> ObjectFile::get_indecies<glm::uvec3>() const;
 
-ObjectFile::ObjectFile(const char *p) {
-	path = MESH_PATH + p;
-	std::string file = read_file(path);
-	for (std::string s : read_lines(file)) {
+ObjectFile::ObjectFile(const char *p) : File(MESH_PATH + p) {
+	for (std::string s : read_lines()) {
 		std::vector<std::string> tokens = split(s, ' ');
 		if (tokens.size() < 3) {
 			continue;
@@ -81,9 +80,13 @@ ObjectFile::ObjectFile(const char *p) {
 				spdlog::error("Expected index with 2-3 params, got {}",
 				    ft.size() - 1);
 			}
-			indecies.push_back(std::atoi(ft.at(1).data()));
-			indecies.push_back(std::atoi(ft.at(2).data()));
-			indecies.push_back(std::atoi(ft.at(3).data()));
+            glm::uvec3 pos(
+                    std::atoi(ft.at(1).data()),
+                    std::atoi(ft.at(2).data()),
+                    std::atoi(ft.at(3).data())
+                    );
+            
+			indecies.push_back(pos);
 		}
 	}
 }

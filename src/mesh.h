@@ -2,6 +2,7 @@
 
 #include "buffer.h"
 #include "shader.h"
+#include "resource_handler/obj.h"
 
 class Mesh {
   public:
@@ -22,7 +23,7 @@ class Mesh {
 	    const std::vector<glm::uvec2> indecies,
 	    bool normal);
 
-	Mesh(const char *path);
+	Mesh(ObjectFile objfile);
 
 	Mesh(VertexBuffer vb,
 	    IndexBuffer ib,

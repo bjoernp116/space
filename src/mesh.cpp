@@ -7,7 +7,7 @@
 #include "glm/geometric.hpp"
 #include "utils.h"
 #include "mesh.h"
-#include "obj.h"
+#include "resource_handler/obj.h"
 
 const std::string Mesh::class_name() const {
 	return std::string("Mesh");
@@ -98,9 +98,7 @@ std::vector<float> compute_flat_normals(std::vector<float> vertecies,
 	return normals;
 }
 
-Mesh::Mesh(const char *path) {
-	std::string file = read_file(MESH_PATH + path);
-	ObjectFile objfile(path);
+Mesh::Mesh(ObjectFile objfile) {
 	std::vector<float> vertecies = objfile.get_vertecies<float>();
 	std::vector<float> normals = objfile.get_normals<float>();
 	std::vector<unsigned int> indecies = objfile.get_indecies<unsigned int>();
@@ -118,6 +116,9 @@ Mesh::Mesh(const char *path) {
 
 	for (float n : vertnorm) {
 		spdlog::debug("Vertnorm: {0}", n);
+	}
+	for (unsigned int index : indecies) {
+		spdlog::debug("{}", index);
 	}
 
 	layout.push<float>(3);

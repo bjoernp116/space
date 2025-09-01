@@ -7,8 +7,8 @@
 
 const std::string SHADER_PATH = "./shaders/";
 
-Shader::Shader(std::string path, GLenum shader_type) {
-	src = read_file(SHADER_PATH + path);
+Shader::Shader(std::string path, GLenum shader_type)
+    : File(SHADER_PATH + path) {
 	type = shader_type;
 	id = glCreateShader(shader_type);
 }
@@ -18,7 +18,9 @@ Shader::~Shader() {
 }
 
 void Shader::compile_shader() const {
-	const char *src_point = src.c_str();
+	const std::string src = read();
+	const char *src_point = src.data();
+
 	glShaderSource(id, 1, &src_point, nullptr);
 
 	glCompileShader(id);
@@ -32,7 +34,7 @@ bool Shader::status() const {
 		glGetShaderInfoLog(id, 512, NULL, info_log);
 		spdlog::error("Shader compilation error: {0}",
 		    reinterpret_cast<const char *>(info_log));
-		spdlog::debug("({0})", src);
+		spdlog::debug("({0})", read());
 
 		return false;
 	}

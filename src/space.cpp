@@ -4,6 +4,7 @@
 #include <imgui/backends/imgui_impl_glfw.h>
 
 #include "space.h"
+#include "resource_handler/file.h"
 #include "entity.h"
 #include "input.h"
 #include "mesh.h"
@@ -88,6 +89,10 @@ int Space::init() {
 	    0,
 	    nullptr,
 	    GL_TRUE);
+	File box_file("./meshes/cube.obj");
+
+	std::string content = box_file.read();
+	spdlog::debug("{}", content);
 	ShaderProgram shader_program("vertex.glsl", "fragment.glsl");
 	shader_program.use();
 
@@ -151,6 +156,7 @@ int Space::init() {
 		// Clear only viewport area before drawing scene
 
 		// Update camera movement here if you want
+
 		renderer.basic_camera_movement(speed);
 
 		renderer.draw();

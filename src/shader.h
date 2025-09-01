@@ -5,15 +5,16 @@
 #include <string>
 #include <vector>
 #include "light.h"
+#include "resource_handler/file.h"
 
-class Shader {
+class Shader : public File {
   public:
 	unsigned int id;
-	std::string src;
 	int type;
 
 	Shader(std::string path, GLenum shader_type);
 	~Shader();
+
 	void compile_shader() const;
 	bool status() const;
 };
